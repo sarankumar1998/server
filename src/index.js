@@ -17,7 +17,7 @@ app.use(express.json());
 app.use("/api/v1", autho);
 
 app.get("/health", (req, res) => {
-  res.status(200).json({ message: "Server is healthy" });
+  res.status(200).json({ message: "Server is healthy checkkkk" });
 });
 
 
