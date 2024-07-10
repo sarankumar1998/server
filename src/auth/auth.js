@@ -4,14 +4,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var moment = require("moment");
 
-
 const router = express.Router();
 
-
 router.post("/register", async (req, res) => {
-  // CHECK IF USER ALREADY EXISTS
   const alreadyUser = "SELECT * FROM users WHERE username = ?";
-  
+
   con.query(alreadyUser, [req.body.username], (err, data) => {
     if (err) return res.status(500).json({ error: err.message });
     if (data.length) return res.status(409).json("User already exists!");
@@ -21,7 +18,7 @@ router.post("/register", async (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
     const newUser =
-      "INSERT INTO users (`email`,`username`,`password`,`firstName`,`lastName`,`address`,`country`,`dob`,`mobile`, createdOn) VALUE (?)";
+      "INSERT INTO users (`email`,`username`,`password`,`firstName`,`lastName`,`address`,`country`,`dob`,`mobile`, `createdOn`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     const values = [
       req.body.email,
@@ -43,8 +40,7 @@ router.post("/register", async (req, res) => {
       return res.status(200).json("User has been created.");
     });
   });
-});
-
+})
 router.post("/login", async (req, res) => {
 
   const userLogin = "SELECT * FROM users WHERE username = ?";
