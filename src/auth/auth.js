@@ -41,6 +41,17 @@ router.post("/register", async (req, res) => {
     });
   });
 })
+router.get("/getall", (req, res) => {
+  const getAllUsers = "SELECT * FROM users";
+
+  con.query(getAllUsers, (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    return res.status(200).json(data);
+  });
+});
+
 router.post("/login", async (req, res) => {
 
   const userLogin = "SELECT * FROM users WHERE username = ?";
